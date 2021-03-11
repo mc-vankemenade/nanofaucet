@@ -53,15 +53,12 @@ ws.post('/withdraw', (req, res) => { // /withdraw endpoint for receiving post re
                 res.status(200);
                 res.send(this.responseText); //forwards code 200 and message to client webpage
             }
-            else
-            {
-                res.status(400).send("Bad Request"); //if response is incorrect, send code 400 to client page
-            }
         }
+
     }else if(response.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/) && cachedAddresses.includes(response)) {
         res.status(403).send("Forbidden");
 
-    } else {
+    } else if(!response.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/)){
         res.status(400).send("Bad Request");
     }
 });
@@ -92,8 +89,7 @@ ws.get('/info', (req, res) => { // listens for get requests when client page che
             "donationAddr": process.env.DONATIONADDR,
             "balance":json.balance
             };
-            res.status(200);
-            res.send(message); //forwards wallet balance to client.
+            res.status(200).send(message); //forwards wallet balance to client.
         }
     }
 });
