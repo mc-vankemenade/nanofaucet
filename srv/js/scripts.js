@@ -4,6 +4,7 @@ submit.addEventListener('click', function() {
     sendNano();
 })
 
+var captchaValid = false;
 var recaptchaKey;
 
 function recaptchaCallback(token) {
@@ -20,6 +21,7 @@ function recaptchaCallback(token) {
 
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
+                captchaValid = true;
                 submit.disabled = false; 
                 console.log("captcha Verified!");
         }
