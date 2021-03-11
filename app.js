@@ -47,7 +47,7 @@ ws.post('/withdraw', (req, res) => { // /withdraw endpoint for receiving post re
         http.onreadystatechange = function() { //fires when server gets response
             console.log(this.responseText);
             if (this.readyState == 4 && this.status == 200) { //checks if message is valid
-                cachedAddresses.push(destination);
+                cachedAddresses.push(req.body.address);
                 console.log(this.responseText);
 
                 res.status(200);
@@ -90,7 +90,7 @@ ws.get('/info', (req, res) => { // listens for get requests when client page che
             "faucetAddr": process.env.ACCOUNTADDR,
             "captchaSiteKey": process.env.CAPTCHASITEKEY,
             "donationAddr": process.env.DONATIONADDR,
-            "balance": json.balance
+            "balance":json.balance
             };
             res.status(200);
             res.send(message); //forwards wallet balance to client.
