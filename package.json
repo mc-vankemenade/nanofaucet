@@ -1,0 +1,28 @@
+{
+  "name": "nanofaucet.eu",
+  "version": "1.0.0",
+  "description": "a nano faucet",
+  "author": "Mathijs van Kemenade",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "node-cron": "^2.0.3",
+    "uuid": "^8.3.2",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mc-vankemenade/nanoFaucet.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mc-vankemenade/nanoFaucet/issues"
+  },
+  "homepage": "https://github.com/mc-vankemenade/nanoFaucet#readme"
+}

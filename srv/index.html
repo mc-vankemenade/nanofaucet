@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title id=Title></title>
+
+  <link rel="stylesheet" href="css/styles.css?v=1.0">
+
+</head>
+
+<body>
+    <div class="header">
+      <h1 id="headerText">We are currently under construction! This faucet is currently not working!</h1>
+    </div>
+    <div class="faucetWrap">
+        <p id="faucetBalance">Faucet balance:</p>
+        <form>
+            <label for="walletAddr">NANO wallet address:</label><br>
+            <input type="text" id="walletAddr" placeholder="nano_ or xrb_ address"><br><br>
+            <div id="captcha"></div>
+            <br>
+            <button type="button" id="submitButton" disabled="disabled">Receive nano</button>
+            <p id="response"></p>
+        </form>
+        <p>if you want to support the faucet, consider adding nano to the faucet balance.</p>
+        <p id="faucetAddr"></p>
+    </div>
+    <div class="footer">
+        <h2>If you like this Faucet please consider a personal donation.</h2>
+        <p id="donationAddr"></p>
+    </div>
+    
+  <script id="captchaScript" src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+  <script src="js/scripts.js"></script>
+</body>
+</html>
