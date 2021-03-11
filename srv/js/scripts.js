@@ -8,7 +8,7 @@ var recaptchaKey;
 
 function recaptchaCallback(token) {
 
-    let url = window.location.href + "verify"
+    let url = window.location.href + "verify";
 
     let message = {"token": token};
 
@@ -16,10 +16,12 @@ function recaptchaCallback(token) {
     http.open("POST", url, true);
     http.setRequestHeader('Content-Type', 'application/json');
     http.send(JSON.stringify(message));
+    console.log("captcha verifification requested!")
 
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
                 submit.disabled = false; 
+                console.log("captcha Verified!");
         }
     }
 }
