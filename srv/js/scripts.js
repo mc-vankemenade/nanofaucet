@@ -10,15 +10,10 @@ function recaptchaCallback(token) {
 
     let url = "https://www.google.com/recaptcha/api/siteverify?secret=" + recaptchaKey + "&response=" + token;
 
-    let message = {
-        "secret": recaptchaKey,
-        "response": token
-    };
-
     var http = new XMLHttpRequest();
     http.open("POST", url, true);
     http.setRequestHeader('Content-Type', 'application/json');
-    http.send(JSON.stringify(message));
+    http.send();
 
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
