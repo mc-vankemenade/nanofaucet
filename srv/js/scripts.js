@@ -82,7 +82,6 @@ var onloadCallback = function(){
             document.getElementById("headerText").innerHTML = window.location.hostname;
             document.getElementById("faucetAddr").innerHTML = json.faucetAddr;
             document.getElementById("donationAddr").innerHTML = json.donationAddr;
-            document.getElementById("googleConsole").setAttribute("content", json.searchConsole);
 
             recaptchaKey = json.captchaSiteKey;
             grecaptcha.render("captcha", {"sitekey": json.captchaSiteKey, "callback": "recaptchaCallback"});
