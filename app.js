@@ -100,11 +100,14 @@ ws.post( '/verify', (req, res) => {
     let url = "https://www.google.com/recaptcha/api/siteverify?secret=" + process.env.CAPTCHASECRETKEY + "&response=" + req.body.token;
 
     http.open("POST", url, true);
-    http.send(); //sends json to wallet or node.
+    http.send();
 
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            res.status(200).send('OK');
+            let json = JSON.parse(this.responseText);
+            if(json.success == true){
+                res.status(200).send('OK');
+            }
         }
     }
 });
