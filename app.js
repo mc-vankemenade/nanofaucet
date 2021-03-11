@@ -86,6 +86,7 @@ ws.get('/info', (req, res) => { // listens for get requests when client page che
             let message = {
             "faucetAddr": process.env.ACCOUNTADDR,
             "captchaSiteKey": process.env.CAPTCHASITEKEY,
+            "searchConsole": process.env.SEARCHCONSOLE,
             "donationAddr": process.env.DONATIONADDR,
             "balance":json.balance
             };
