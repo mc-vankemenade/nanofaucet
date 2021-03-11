@@ -64,7 +64,7 @@ ws.post('/withdraw', (req, res) => { // /withdraw endpoint for receiving post re
     } else {
         res.status(400).send("Bad Request");
     }
-})
+});
 
 ws.get('/info', (req, res) => { // listens for get requests when client page checks for faucet balance.
     let http = new XMLHttpRequest();
@@ -94,6 +94,21 @@ ws.get('/info', (req, res) => { // listens for get requests when client page che
             };
             res.status(200);
             res.send(message); //forwards wallet balance to client.
+        }
+    }
+});
+
+ws.post( '/verify', (req, res) => {
+    let http = new XMLHttpRequest();
+
+    let url = "https://www.google.com/recaptcha/api/siteverify?secret=" + process.env.CAPTCHASECRETKEY + "&response=" + req.body.token;
+
+    http.open("POST", url, true);
+    http.send(); //sends json to wallet or node.
+
+    http.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            res.status(200).send('OK');
         }
     }
 });

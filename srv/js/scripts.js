@@ -8,19 +8,18 @@ var recaptchaKey;
 
 function recaptchaCallback(token) {
 
-    let url = "https://www.google.com/recaptcha/api/siteverify?secret=" + recaptchaKey + "&response=" + token;
+    let url = window.location.href + "verify"
+
+    let message = {"token": token};
 
     var http = new XMLHttpRequest();
     http.open("POST", url, true);
     http.setRequestHeader('Content-Type', 'application/json');
-    http.send();
+    http.send(JSON.stringify(message));
 
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            let json = JSON.parse(this.responseText);
-            if(json.success == true) {
-                submit.disabled = false;
-            } 
+                submit.disabled = false; 
         }
     }
 }
