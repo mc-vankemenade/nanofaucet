@@ -8,7 +8,7 @@ var recaptchaKey;
 
 function recaptchaCallback(token) {
 
-    let url = "https://www.google.com/recaptcha/api/siteverify"
+    let url = "https://www.google.com/recaptcha/api/siteverify?secret=" + recaptchaKey + "&response=" + token;
 
     let message = {
         "secret": recaptchaKey,
