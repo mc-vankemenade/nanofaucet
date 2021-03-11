@@ -1,17 +1,34 @@
-
-
 const submit = document.getElementById("submitButton");
-var captchaValid = false
 
 submit.addEventListener('click', function() {
     sendNano();
 })
 
+var recaptchaKey;
+
 function recaptchaCallback(token) {
-    submit.disabled = false;
-    captchaValid = true;
-    console.log("recaptcha Completed" + token);
-};
+
+    let url = "https://www.google.com/recaptcha/api/siteverify"
+
+    let message = {
+        "secret": recaptchaKey,
+        "response": token
+    };
+
+    var http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.setRequestHeader('Content-Type', 'application/json');
+    http.send(JSON.stringify(message));
+
+    http.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            let json = JSON.parse(this.responseText);
+            if(json.success == true) {
+                submit.disabled = false;
+            } 
+        }
+    }
+}
 
 function sendNano() {
     if(captchaValid) {
@@ -61,16 +78,16 @@ var onloadCallback = function(){
         if (this.readyState == 4 && this.status == 200) {
             var json = JSON.parse(this.responseText);
             var accountBalance = json.balance / Math.pow(10, 30);
+
             document.getElementById("faucetBalance").innerHTML = "Faucet balance: " + accountBalance;
             document.getElementById("Title").innerHTML = window.location.hostname;
             document.getElementById("headerText").innerHTML = window.location.hostname;
             document.getElementById("faucetAddr").innerHTML = json.faucetAddr;
             document.getElementById("donationAddr").innerHTML = json.donationAddr;
-            grecaptcha.render(
-                "captcha",
-                {"sitekey": json.captchaSiteKey, "callback": "recaptchaCallback"}
-                );
-            console.log(this.responseText);
+
+            recaptchaKey = json.captchaSiteKey;
+            grecaptcha.render("captcha", {"sitekey": json.captchaSiteKey, "callback": "recaptchaCallback"});
+
         } else {
             document.getElementById("faucetBalance").innerHTML = "Error retrieving account balance.";
         }
