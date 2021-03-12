@@ -44,7 +44,7 @@ ws.post('/withdraw', (req, res) => { // /withdraw endpoint for receiving post re
         http.send(JSON.stringify(message)); //sends message
         
         res.status(200);
-        res.send(this.responseText);//forwards code 200 and message to client webpage
+        res.send();//forwards code 200 and message to client webpage
 
         http.onreadystatechange = function() { //fires when server gets response
             console.log(this.responseText);
