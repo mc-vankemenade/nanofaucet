@@ -19,32 +19,33 @@ const port = process.env.HOSTPORT; //loads port number from config json
 ws.use(express.json());
 ws.use(express.static('srv')); //serves a static page
 
-ws.post('/withdraw', (req, res) => { // /withdraw endpoint for receiving post requests
+ws.post('/withdraw', (req, res) => {
     
-    let response = req.body.address;
-    if (req.body.address.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/) && !cachedAddresses.includes(req.body.adress)) { //tests address for valid formatting and earlier usage
+    checkRecaptcha(req.body.token, (status) => {
+        if (status == 200 && req.body.address.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/) && !cachedAddresses.includes(req.body.adress)) {
+            var message = { //json message to send to pippin
+                "action": "send",
+                "wallet": process.env.WALLETID,
+                "source": process.env.ACCOUNTADDR,
+                "destination": req.body.address,
+                "amount": process.env.DEPOSITAMOUNTRAW,
+                "id": uuidv4() //generates unique id for transaction
+            };
 
-        var message = { //json message to send to pippin
-            "action": "send",
-            "wallet": process.env.WALLETID,
-            "source": process.env.ACCOUNTADDR,
-            "destination": req.body.address,
-            "amount": process.env.DEPOSITAMOUNTRAW,
-            "id": uuidv4() //generates unique id for transaction
-        };
+            queryWallet(message, (walletResponse) => {
+                console.log(walletResponse);
+            });
 
-        queryWallet(message, (walletResponse) => {
-            console.log(walletResponse);
-        });
-        res.status(200).send();
-        cachedAddresses.push(req.body.address);
-
-    }else if(cachedAddresses.includes(req.body.address)) {
-        res.status(403).send("Forbidden");
-
-    }else if(!response.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/)){
-        res.status(400).send("Bad Request");
-    }
+            cachedAddresses.push(req.body.address);
+            res.status(200).send();
+        }
+        else if(status == 200 && cachedAddresses.includes(req.body.address)) {
+            res.status(403).send("Forbidden");
+        }
+        else if(!response.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/)){
+            res.status(400).send("Bad Request");
+        }
+    });
 });
 
 ws.get('/info', (req, res) => { 
@@ -62,12 +63,6 @@ ws.get('/info', (req, res) => {
             };
 
         res.status(200).send(message);
-    });
-});
-
-ws.post( '/verify', (req, res) => {
-    checkRecaptcha(req.body.token, (status) => {
-        res.status(status).send();   
     });
 });
 

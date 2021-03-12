@@ -10,41 +10,40 @@ function recaptchaCallback(token) {
 }
 
 function sendNano() {
-    if(captchaValid) {
-        var url = window.location.href + "withdraw";
+    var url = window.location.href + "withdraw";
 
-        var walletAddr = document.getElementById("walletAddr").value;
+    var walletAddr = document.getElementById("walletAddr").value;
 
-        var message = {
-            "address":walletAddr,
-            "token": recaptchaToken
-        };
+    var message = {
+        "address": walletAddr,
+        "token": recaptchaToken
+    };
 
-        console.log(JSON.stringify(message));
+    console.log(JSON.stringify(message));
 
-        var http = new XMLHttpRequest();
-        http.open("POST", url, true);
-        http.setRequestHeader('Content-Type', 'application/json');
-        http.send(JSON.stringify(message));
+    var http = new XMLHttpRequest();
+    http.open("POST", url, true);
+    http.setRequestHeader('Content-Type', 'application/json');
+    http.send(JSON.stringify(message));
 
-        document.getElementById("response").innerHTML = "<div class='loader'></div>";
+    document.getElementById("response").innerHTML = "<div class='loader'></div>";
 
-        http.onreadystatechange = function() {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("response").innerHTML = "Request made! Depending on the host it might take some time to generate the <a href='https://nanolooker.com/account/nano_3crd9uoyy8ewo9y7h71i7d7fenyi54i793png4r5zm94udmxpbj9pzmqapr6'.";
-                console.log(this.responseText);
-            }
-            if (this.readyState == 4 && this.status == 400) {
-                document.getElementById("response").innerHTML = "Wrong wallet address.";
-                console.log(this.responseText);
-            }
-            if (this.readyState == 4 && this.status == 403) {
-                document.getElementById("response").innerHTML = "nano already claimed. Come back in 6 hours.";
-                console.log(this.responseText);
-            }
+    http.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("response").innerHTML = "Request made! Depending on the host it might take some time to generate the <a href='https://nanolooker.com/account/nano_3crd9uoyy8ewo9y7h71i7d7fenyi54i793png4r5zm94udmxpbj9pzmqapr6'.";
+            console.log(this.responseText);
         }
-    }        
-}
+        if (this.readyState == 4 && this.status == 400) {
+            document.getElementById("response").innerHTML = "Wrong wallet address.";
+            console.log(this.responseText);
+        }
+        if (this.readyState == 4 && this.status == 403) {
+            document.getElementById("response").innerHTML = "nano already claimed. Come back in 6 hours.";
+            console.log(this.responseText);
+        }
+    }
+}        
+
 
 var onloadCallback = function(){
     var url = window.location.href + "info";
