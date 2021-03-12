@@ -94,7 +94,9 @@ ws.get('/info', (req, res) => { // listens for get requests when client page che
 });
 
 ws.post( '/verify', (req, res) => {
-    if(checkRecaptcha(req.body.token)){
+    var captchaStatus = checkRecaptcha(req.body.token)
+    console.log(captchaStatus);
+    if(captchaStatus){
         res.status(200).send("OK");
     }
 });
