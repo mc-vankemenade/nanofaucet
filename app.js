@@ -94,9 +94,19 @@ ws.get('/info', (req, res) => { // listens for get requests when client page che
 });
 
 ws.post( '/verify', (req, res) => {
+    if(checkRecaptcha(req.body.token)){
+        res.status(200).send("OK");
+    }
+});
+
+ws.listen(port, () => {
+    console.log(`webserver running on port: ${port}`); //starts the webserver.
+});
+
+function checkRecaptcha(token) {
     let http = new XMLHttpRequest();
 
-    let url = "https://www.google.com/recaptcha/api/siteverify?secret=" + process.env.CAPTCHASECRETKEY + "&response=" + req.body.token;
+    let url = "https://www.google.com/recaptcha/api/siteverify?secret=" + process.env.CAPTCHASECRETKEY + "&response=" + token;
 
     http.open("POST", url, true);
     http.send();
@@ -105,12 +115,13 @@ ws.post( '/verify', (req, res) => {
         if (this.readyState == 4 && this.status == 200) {
             let json = JSON.parse(this.responseText);
             if(json.success == true){
-                res.status(200).send('OK');
+                return true;
+            }else{
+                return false;
             }
+
+        }else if(this.readyState == 4 && this.status != 200){
+            return false;
         }
     }
-});
-
-ws.listen(port, () => {
-    console.log(`webserver running on port: ${port}`); //starts the webserver.
-});
+}
