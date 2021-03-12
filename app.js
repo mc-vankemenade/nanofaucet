@@ -90,6 +90,7 @@ function checkRecaptcha(token, callback) {
             else if(json.success == false) {
                 callback(403);
             }
+        }
     }
 }
 
