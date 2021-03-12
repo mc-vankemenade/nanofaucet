@@ -90,9 +90,13 @@ function checkRecaptcha(token, callback) {
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             let json = JSON.parse(this.responseText);
-            if(json.success == true){
+            if(json.success == true) {
                 callback(200);
             }
+            else if(json.success == false) {
+                callback(403);
+            }
+            
         } else {
             callback(400);
         } 
