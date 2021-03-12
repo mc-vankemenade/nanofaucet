@@ -113,3 +113,76 @@ button :disabled{
     background-color: #ffffff;
     text-align: center;
 }
+
+@media only screen and (max-width: 1200px) {
+    body{
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-rows: 100px 220px 220px 220px 20px 200px;
+        text-overflow: auto;
+    }
+    
+    .header{
+        grid-column: 1/5;
+        grid-row: 1/2;
+        
+        margin: 5px;
+        padding: 10px;
+    
+        background-color: #4a90e2;
+        text-align: center;
+    }
+    
+    .faucetWrap{
+        grid-column: 1/5;
+        grid-row: 2/5;
+    
+        margin: 50px;
+        padding: 10px;
+    
+        background-color: #ffffff;
+        box-shadow: 5px 5px 10px grey;
+        text-align: center;
+    }
+    
+    .loader {
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #4a90e2; /* Blue */
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        animation: spin 2s linear infinite;
+        display: flex;
+        justify-content: center;
+        margin: auto;
+    }
+    
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    
+    #captcha{
+        display: flex;
+        justify-content: center;
+    }
+    
+    .addrImg{
+        margin: auto;
+        display: flex;
+        justify-content: center;
+    }
+    
+    .footer{
+        grid-column: 1/5;
+        grid-row: 6/7;
+    
+        margin: 5px;
+        padding: 10px;
+    
+        border-radius: 10px;
+    
+        background-color: #ffffff;
+        text-align: center;
+    }
+}
