@@ -37,7 +37,7 @@ ws.post('/withdraw', (req, res) => { // /withdraw endpoint for receiving post re
             console.log(walletResponse);
         });
         res.status(200).send();
-        cachedAddresses.append(req.body.address);
+        cachedAddresses.push(req.body.address);
 
     }else if(cachedAddresses.includes(req.body.address)) {
         res.status(403).send("Forbidden");
