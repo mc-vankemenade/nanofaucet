@@ -66,13 +66,7 @@ ws.get('/info', (req, res) => {
 
 ws.post( '/verify', (req, res) => {
     checkRecaptcha(req.body.token, (status) => {
-        switch(status){
-            case 200:
-                res.status(200).send("OK");
-            case 400:
-                res.status(400).send("Bad Request");
-        }
-        
+        res.status(status).send();   
     });
 });
 
