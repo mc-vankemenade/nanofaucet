@@ -77,11 +77,13 @@ var onloadCallback = function(){
             var json = JSON.parse(this.responseText);
             var accountBalance = json.balance / Math.pow(10, 30);
 
-            document.getElementById("faucetBalance").innerHTML = "Faucet balance: " + accountBalance;
-            document.getElementById("Title").innerHTML = window.location.hostname;
+            document.getElementById("faucetBalance").innerHTML = "Faucet balance: " + accountBalance + " NANO";
             document.getElementById("headerText").innerHTML = window.location.hostname;
             document.getElementById("faucetAddr").innerHTML = json.faucetAddr;
+            document.getElementById("faucetAddrImg").setAttribute("src", "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + json.faucetAddr + "&choe=UTF-8");
             document.getElementById("donationAddr").innerHTML = json.donationAddr;
+            document.getElementById("donationAddrImg").setAttribute("src", "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + json.donationAddr + "&choe=UTF-8");
+
 
             recaptchaKey = json.captchaSiteKey;
             grecaptcha.render("captcha", {"sitekey": json.captchaSiteKey, "callback": "recaptchaCallback"});

@@ -1,12 +1,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-
-  <title id=Title></title>
+  <title id=Title>Nano Faucet</title>
+  <meta name="description" content="This faucet is hosted using the nanofaucet docker image!"/>
 
   <link rel="stylesheet" href="css/styles.css?v=1.0">
-  <meta id="googleConsole" name="google-site-verification" content="" />
-
 </head>
 
 <body>
@@ -20,15 +18,20 @@
             <input type="text" id="walletAddr" placeholder="nano_ or xrb_ address"><br><br>
             <div id="captcha"></div>
             <br>
-            <button type="button" id="submitButton" disabled="disabled">Receive nano</button>
+            <button type="button" id="submitButton" disabled="disabled">Receive NANO</button>
             <p id="response"></p>
         </form>
-        <p>if you want to support the faucet, consider adding nano to the faucet balance.</p>
+        <p>If you want to support the faucet, consider adding nano to the faucet balance.</p>
         <p id="faucetAddr"></p>
+        <img id="faucetAddrImg" class="addrImg" src="">
     </div>
     <div class="footer">
         <h2>If you like this Faucet please consider a personal donation.</h2>
         <p id="donationAddr"></p>
+        <img id="donationAddrImg" class="addrImg" src="">
+        <br>
+        <p>Do you want to host your own nano faucet? You can find the source on <a href="https://github.com/mc-vankemenade/nanofaucet">Github</a>.</p>
+        <p>Want to learn more about NANO? Visit <a href="https://nano.org/">nano.org</a>.</p>
     </div>
     
   <script id="captchaScript" src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
