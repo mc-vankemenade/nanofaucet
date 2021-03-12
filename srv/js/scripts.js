@@ -6,6 +6,7 @@ submit.addEventListener('click', function() {
 var recaptchaToken;
 function recaptchaCallback(token) {
     recaptchaToken = token;
+    submit.disabled = false;
 }
 
 function sendNano() {
