@@ -1,31 +1,11 @@
 const submit = document.getElementById("submitButton");
-
 submit.addEventListener('click', function() {
     sendNano();
 })
 
-var captchaValid = false;
-var recaptchaKey;
-
+var recaptchaToken;
 function recaptchaCallback(token) {
-
-    let url = window.location.href + "verify";
-
-    let message = {"token": token};
-
-    var http = new XMLHttpRequest();
-    http.open("POST", url, true);
-    http.setRequestHeader('Content-Type', 'application/json');
-    http.send(JSON.stringify(message));
-    console.log("captcha verifification requested!")
-
-    http.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-                captchaValid = true;
-                submit.disabled = false; 
-                console.log("captcha Verified!");
-        }
-    }
+    recaptchaToken = token;
 }
 
 function sendNano() {
@@ -35,7 +15,8 @@ function sendNano() {
         var walletAddr = document.getElementById("walletAddr").value;
 
         var message = {
-            "address":walletAddr
+            "address":walletAddr,
+            "token": recaptchaToken
         };
 
         console.log(JSON.stringify(message));
@@ -49,7 +30,7 @@ function sendNano() {
 
         http.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("response").innerHTML = "Request made! Depending on the host it might take some time to generate the block.";
+                document.getElementById("response").innerHTML = "Request made! Depending on the host it might take some time to generate the <a href='https://nanolooker.com/account/nano_3crd9uoyy8ewo9y7h71i7d7fenyi54i793png4r5zm94udmxpbj9pzmqapr6'.";
                 console.log(this.responseText);
             }
             if (this.readyState == 4 && this.status == 400) {
@@ -84,8 +65,6 @@ var onloadCallback = function(){
             document.getElementById("donationAddr").innerHTML = json.donationAddr;
             document.getElementById("donationAddrImg").setAttribute("src", "https://chart.googleapis.com/chart?chs=150x150&cht=qr&chl=" + json.donationAddr + "&choe=UTF-8");
 
-
-            recaptchaKey = json.captchaSiteKey;
             grecaptcha.render("captcha", {"sitekey": json.captchaSiteKey, "callback": "recaptchaCallback"});
 
         } else {
