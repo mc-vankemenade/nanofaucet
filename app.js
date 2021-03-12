@@ -93,13 +93,14 @@ function checkRecaptcha(token, callback) {
             if(json.success == true){
                 callback(200);
             }
-        }
-        callback(400);
+        } else {
+            callback(400);
+        } 
     }
 }
 
 function queryWallet(message, callback) {
-    console.log("Sending query to wallet: " + message);
+    console.log("Sending query to wallet: " + JSON.stringify(message));
     let http = new XMLHttpRequest();
     http.open("POST", process.env.WALLETURL, true);
     http.send(JSON.stringify(message));
