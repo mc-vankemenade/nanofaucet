@@ -114,7 +114,7 @@ button :disabled{
     text-align: center;
 }
 
-@media only screen and (max-width: 1024px) {
+@media only screen and (orientation: portrait) {
     body{
         display: grid;
         grid-template-columns: 25% 25% 25% 25%;
