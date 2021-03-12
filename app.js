@@ -42,16 +42,15 @@ ws.post('/withdraw', (req, res) => { // /withdraw endpoint for receiving post re
         http.open("POST", url, true); //makes request of type post with predefined target address
         http.setRequestHeader('Content-Type', 'application/json'); //sets message type to json
         http.send(JSON.stringify(message)); //sends message
-
+        
+        res.status(200);
+        res.send(this.responseText);//forwards code 200 and message to client webpage
 
         http.onreadystatechange = function() { //fires when server gets response
             console.log(this.responseText);
             if (this.readyState == 4 && this.status == 200) { //checks if message is valid
                 cachedAddresses.push(req.body.address);
                 console.log(this.responseText);
-
-                res.status(200);
-                res.send(this.responseText); //forwards code 200 and message to client webpage
             }
         }
 

@@ -49,7 +49,7 @@ function sendNano() {
 
         http.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("response").innerHTML = "nano sent!";
+                document.getElementById("response").innerHTML = "Request made! Depending on the host it might take some time to generate the block.";
                 console.log(this.responseText);
             }
             if (this.readyState == 4 && this.status == 400) {
