@@ -7,7 +7,7 @@ const cron = require('node-cron'); //loads module for clearing user ip's
 
 var cachedAddresses = [];
 
-cron.schedule('0 */6 * * *', function(){ //clears all saved ip's every 6 hours
+cron.schedule('0 */6 * * *', function(){ //clears all saved addresses every 6 hours
     cachedAddresses = [];
     console.log("cleared cached addresses!")
   });
@@ -37,7 +37,7 @@ ws.post('/withdraw', (req, res) => {
             });
 
             cachedAddresses.push(req.body.address);
-            console.log("cached address: " + req.body.address);
+            console.log("cached address: " + cachedAddresses);
             res.status(200).send();
         }
         else if(status == 200 && cachedAddresses.includes(req.body.address)) {
