@@ -1,10 +1,10 @@
 # Nanofaucet
 
-This project makes it easy for someone who is already running a NANO node to host a faucet. Using a prebuilt Docker image you can quickly get up and running. However if you wish to have a custom lay-out or theme you can easily create your own by cloning or forking this repository and modifying the files in the 'srv' directory.
+This project makes it easier for someone who is already running a NANO node to host a faucet. Using a prebuilt Docker image you can quickly get up and running. However if you wish to have a custom lay-out or theme you can easily create your own by cloning or forking this repository and modifying the files in the 'srv' directory.
 
 ## About the faucet
 
-the faucet uses a nodeJS Express webserver to host a webpage where people can redeem a small amount of nano for free. The webserver communicates directly with a node or a preconfigured [Pippin](https://pypi.org/project/pippin-wallet/) nanowallet. The goal here is to promote the cryptocurrency and allow more people to get their hands on NANO.
+The faucet uses a nodeJS Express webserver to host a webpage where people can redeem a small amount of nano for free. The webserver validates the request to receive NANO and communicates directly with a node or a preconfigured [Pippin](https://pypi.org/project/pippin-wallet/) nanowallet in order to send the predefined amount. The goal of this project is to promote the cryptocurrency and allow more people to get their hands on NANO.
 
 ## Configuring the faucet
 
@@ -27,7 +27,7 @@ WALLETURL="" #The URL for your wallet or node RPC.
 WALLETID="" #The ID your node or wallet assigns to your payout account. 
 ACCOUNTADDR="" #The NANO address you want to use for payout.
 DONATIONADDR="" #the NANO address you wish to receive donations on.
-DEPOSITAMOUNTRAW=100000000000000000000000000 #The amount of raw to send with each withdrawal.
+DEPOSITAMOUNTRAW=100000000000000000000000000 #The amount of raw to send with each withdrawal. (1 raw == 10^-30 NANO)
 CAPTCHASITEKEY="" #The site-key google gives you when you register your site for a recapthca.
 CAPTCHASECRETKEY="" #The secret-key google gives you when you register your site.
 ```
