@@ -37,12 +37,13 @@ ws.post('/withdraw', (req, res) => {
             });
 
             cachedAddresses.push(req.body.address);
+            console.log("cached address: " + req.body.address);
             res.status(200).send();
         }
         else if(status == 200 && cachedAddresses.includes(req.body.address)) {
             res.status(403).send("Forbidden");
         }
-        else if(!response.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/)){
+        else if(!req.body.address.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/)){
             res.status(400).send("Bad Request");
         }
     });
