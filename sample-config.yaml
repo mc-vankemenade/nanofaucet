@@ -1,0 +1,13 @@
+hostPort: 80 #The port to host the faucet on.
+
+walletUrl: "" #The url to your wallet or node RPC port.
+walletId: "" #The wallet id used by your wallet or node.
+accountAddr: "" #The account address to send NANO from.
+donationAddr: "" #The account address to receive personal donations on.
+
+depositAmountRaw: 100000000000000000000000000 #Send 0.0001 NANO.
+withdrawTimer: "" #Withdrawal possible every six hours.
+
+useCaptcha: true #Check to use Recaptcha for verification.
+captchaSitekey: "" #Your Recaptcha site-key.
+captchaSecretkey: "" #Your Recaptcha secret-key.
