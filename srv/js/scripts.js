@@ -4,9 +4,13 @@ submit.addEventListener('click', function() {
 })
 
 var recaptchaToken;
+var accountBalance;
+
 function recaptchaCallback(token) {
     recaptchaToken = token;
-    submit.disabled = false;
+    if(accountBalance > 0.0001){
+        submit.disabled = false;
+    }    
 }
 
 function sendNano() {
@@ -56,7 +60,10 @@ var onloadCallback = function(){
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
             var json = JSON.parse(this.responseText);
-            var accountBalance = json.balance / Math.pow(10, 30);
+            accountBalance = json.balance / Math.pow(10, 30);
+            if(accountBalance < 0.0001){
+                document.getElementById("response").innerHTML = "Faucet Balance too low! Donate below!"
+            }
 
             document.getElementById("faucetBalance").innerHTML = "Faucet balance: " + accountBalance + " NANO";
             document.getElementById("headerText").innerHTML = window.location.hostname;
