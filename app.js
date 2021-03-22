@@ -30,7 +30,8 @@ ws.use(express.static('srv')); //serves a static page
 ws.post('/withdraw', (req, res) => {
     
     checkRecaptcha(req.body.token, (status) => {
-        if (status == 200 && req.body.address.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/) && !cachedAddresses.includes(req.body.adress)) {
+        let targetAddress = req.body.address;
+        if (status == 200 && targetAddress.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/) && !cachedAddresses.includes(targetAddress)) {
             var message = { //json message to send to pippin
                 "action": "send",
                 "wallet": config.walletId,
@@ -44,13 +45,14 @@ ws.post('/withdraw', (req, res) => {
                 console.log(walletResponse);
             });
 
-            cachedAddresses.push(req.body.address);
+            cachedAddresses.push(targetAddress);
+            console.log("cached address: " + cachedAddresses);
             res.status(200).send();
         }
-        else if(status == 200 && cachedAddresses.includes(req.body.address)) {
+        else if(status == 200 && cachedAddresses.includes(targetAddress)) {
             res.status(403).send("Forbidden");
         }
-        else if(!response.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/)){
+        else if(!targetAddress.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/)){
             res.status(400).send("Bad Request");
         }
     });
