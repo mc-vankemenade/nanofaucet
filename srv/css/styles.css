@@ -40,7 +40,7 @@ button{
     padding: 10px;
 }
 
-button :disabled{
+button:disabled{
     background-color: grey;
     color:white;
     border: none;
@@ -114,12 +114,12 @@ button :disabled{
     text-align: center;
 }
 
-@media only screen and (orientation: portrait) {
+@media only screen and (max-width: 1000px) {
     body{
         display: grid;
         grid-template-columns: 25% 25% 25% 25%;
         grid-template-rows: 100px 220px 220px 220px 20px 200px;
-        text-overflow: auto;
+        word-wrap: break-word;
     }
 
     button{
@@ -130,9 +130,16 @@ button :disabled{
         font-size: 12pt;
         font-weight: bold;
         padding: 10px;
+        height: 10%;
+        width: 50%;
+    }
+
+    input{
+        width: 90%;
+        height: 10%;
     }
     
-    button :disabled{
+    button:disabled{
         background-color: grey;
         color:white;
         border: none;
@@ -140,6 +147,8 @@ button :disabled{
         font-size: 12pt;
         font-weight: bold;
         padding: 10px;
+        height: 10%;
+        width: 50%;
     }
     
     .header{
