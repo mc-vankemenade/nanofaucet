@@ -33,9 +33,8 @@ function sendNano() {
     document.getElementById("response").innerHTML = "<div class='loader'></div>";
 
     http.onreadystatechange = function() {
-        let json = JSON.parse(this.responseText);
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("response").innerHTML = "Block created:" + json.block;
+            document.getElementById("response").innerHTML = "Generating block... Your NANO will be sent shortly.";
             console.log(this.responseText);
         }
         if (this.readyState == 4 && this.status == 400) {
