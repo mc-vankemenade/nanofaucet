@@ -33,8 +33,9 @@ function sendNano() {
     document.getElementById("response").innerHTML = "<div class='loader'></div>";
 
     http.onreadystatechange = function() {
+        let json = JSON.parse(this.responseText);
         if (this.readyState == 4 && this.status == 200) {
-            document.getElementById("response").innerHTML = "Request made! Depending on the host it might take some time to generate the <a href='https://nanolooker.com/account/nano_3crd9uoyy8ewo9y7h71i7d7fenyi54i793png4r5zm94udmxpbj9pzmqapr6'>block</a>.";
+            document.getElementById("response").innerHTML = "Block created:" + json.block;
             console.log(this.responseText);
         }
         if (this.readyState == 4 && this.status == 400) {

@@ -9,40 +9,42 @@ try {
   console.log(e);
 }
 
-const { v4: uuidv4 } = require('uuid'); //loads uuid module to generate transaction id
-const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest; //loads module for http requests
-const cron = require('node-cron'); //loads module for clearing user ip's
+const { v4: uuidv4 } = require('uuid');
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+const cron = require('node-cron');
 
 var cachedAddresses = [];
-
-cron.schedule(config.withdrawTimer, function(){ //clears all saved ip's every 6 hours
+cron.schedule(config.withdrawTimer, function(){
     cachedAddresses = [];
     console.log("cleared cached addresses!")
   });
 
 const express = require('express');
 const ws = express();
-const port = config.hostPort; //loads port number from config json
+const port = config.hostPort;
 
 ws.use(express.json());
-ws.use(express.static('srv')); //serves a static page
+ws.use(express.static('srv'));
 
 ws.post('/withdraw', (req, res) => {
     
     checkRecaptcha(req.body.token, (status) => {
         let targetAddress = req.body.address;
         if (status == 200 && targetAddress.match(/^(nano|xrb)_[13]{1}[13456789abcdefghijkmnopqrstuwxyz]{59}$/) && !cachedAddresses.includes(targetAddress)) {
-            var message = { //json message to send to pippin
+            var message = {
                 "action": "send",
                 "wallet": config.walletId,
                 "source": config.walletAddr,
                 "destination": req.body.address,
                 "amount": config.depositAmountRaw,
-                "id": uuidv4() //generates unique id for transaction
+                "id": uuidv4()
             };
 
             queryWallet(message, (walletResponse) => {
                 console.log(walletResponse);
+                cachedAddresses.push(targetAddress);
+                console.log("cached address: " + cachedAddresses);
+                res.status(200).send(walletResponse);
             });
 
             cachedAddresses.push(targetAddress);
@@ -78,7 +80,7 @@ ws.get('/info', (req, res) => {
 });
 
 ws.listen(port, () => {
-    console.log(`webserver running on port: ${port}`); //starts the webserver.
+    console.log(`webserver running on port: ${port}`);
 });
 
 function checkRecaptcha(token, callback) {
