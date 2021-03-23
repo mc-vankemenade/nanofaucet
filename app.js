@@ -44,7 +44,7 @@ ws.post('/withdraw', (req, res) => {
                 console.log(walletResponse);
                 cachedAddresses.push(targetAddress);
                 console.log("cached address: " + cachedAddresses);
-                res.status(200).send(json.stringify(walletResponse));
+                res.status(200).send(JSON.stringify(walletResponse));
             });
 
             cachedAddresses.push(targetAddress);
