@@ -65,6 +65,10 @@ var onloadCallback = function(){
                 document.getElementById("response").innerHTML = "Faucet Balance too low! Donate below!"
             }
 
+            if(json.useCaptcha == false){
+                submit.disabled = false;
+            }
+
             document.getElementById("faucetBalance").innerHTML = "Faucet balance: " + accountBalance + " NANO";
             document.getElementById("headerText").innerHTML = window.location.hostname;
             document.getElementById("faucetAddr").innerHTML = json.faucetAddr;

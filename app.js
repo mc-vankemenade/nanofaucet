@@ -67,6 +67,7 @@ ws.get('/info', (req, res) => {
     queryWallet(message, (walletResponse) => {
         let message = {
             "faucetAddr": config.accountAddr,
+            "useCaptcha": config.useCaptcha,
             "captchaSiteKey": config.captchaSitekey,
             "donationAddr": config.donationAddr,
             "balance": walletResponse.balance
