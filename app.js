@@ -42,11 +42,11 @@ ws.post('/withdraw', (req, res) => {
 
             queryWallet(message, (walletResponse) => {
                 console.log(walletResponse);
-                cachedAddresses.push(targetAddress);
-                console.log("cached address: " + cachedAddresses);
-                res.status(200).send();
             });
         
+            cachedAddresses.push(targetAddress);
+            console.log("cached address: " + cachedAddresses);
+            res.status(200).send();
         }
         else if(status == 200 && cachedAddresses.includes(targetAddress)) {
             res.status(403).send("Forbidden");
