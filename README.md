@@ -1,14 +1,14 @@
 # Nanofaucet
 
-This project makes it easier for someone who is already running a NANO node to host a faucet. Using a prebuilt Docker image you can quickly get up and running. However if you wish to have a custom lay-out or theme you can easily create your own by cloning or forking this repository and modifying the files in the 'srv' directory.
+This project makes it easy for someone who is already running a NANO node to host a faucet. Using a prebuilt Docker image you can quickly get up and running. However if you wish to have a custom lay-out or theme you can easily create your own by cloning or forking this repository and modifying the files in the 'srv' directory.
 
 ## About the faucet
 
-The faucet uses a nodeJS Express webserver to host a webpage where people can redeem a small amount of nano for free. The webserver validates the request to receive NANO and communicates directly with a node or a preconfigured [Pippin](https://pypi.org/project/pippin-wallet/) nanowallet in order to send the predefined amount. The goal of this project is to promote the cryptocurrency and allow more people to get their hands on NANO.
+the faucet uses a nodeJS Express webserver to host a webpage where people can redeem a small amount of nano for free. The webserver communicates directly with a node or a preconfigured [Pippin](https://pypi.org/project/pippin-wallet/) nanowallet. The goal here is to promote the cryptocurrency and allow more people to get their hands on NANO.
 
 ## Configuring the faucet
 
-The data the faucet page shows can be configured using enviroment variables when creating the container. I personally recommend [Portainer](https://www.portainer.io/products/community-edition) to set this up and manage my containers. Since that makes it easy to recreate the container if i ever want to change any settings or update the image.
+You can easily configure the faucet by editing the 'sample-config.yaml' file.
 
 ### Requirements
 
@@ -19,32 +19,43 @@ The data the faucet page shows can be configured using enviroment variables when
     2. the ID the node or wallet uses to identify a specific nano wallet.
 4. Your personal account address to receive any donations.
 
-### Enviroment variables
-
-```bash
-HOSTPORT=80 #The port you want to host your faucet on.
-WALLETURL="" #The URL for your wallet or node RPC.
-WALLETID="" #The ID your node or wallet assigns to your payout account. 
-ACCOUNTADDR="" #The NANO address you want to use for payout.
-DONATIONADDR="" #the NANO address you wish to receive donations on.
-DEPOSITAMOUNTRAW=100000000000000000000000000 #The amount of raw to send with each withdrawal. (1 raw == 10^-30 NANO)
-CAPTCHASITEKEY="" #The site-key google gives you when you register your site for a recapthca.
-CAPTCHASECRETKEY="" #The secret-key google gives you when you register your site.
-```
-
 ### Quick start
 
 ```bash
-docker pull mcvankemenade/nanofaucet:latest
+git clone https://github.com/mc-vankemenade/nanofaucet
 ```
 
-Pulls the latest docker image.
+Pulls the latest version of the repository.
 
 ```bash
-docker run -d --restart unless-stopped -e HOSTPORT=80 -e WALLETURL=<user input> -e WALLETID=<user input> -e ACCOUNTADDR=<user input> -e DONATIONADDR=<user input> -e DEPOSITAMOUNTRAW=100000000000000000000000000 -e CAPTCHASITEKEY=<user input> -e CAPTCHASECRETKEY=<user input> -p 80:80 mcvankemenade/nanofaucet:latest
+cd nanofaucet/
 ```
 
-Run the docker container with .env variables. (Warning! this exposes port 80 on your machine to the rest of your network!) 
+Open the downloaded directory.
+
+```bash
+mv sample-config.yaml config.yaml
+```
+
+Changes the sample config file name to the file used by the container.
+
+```bash
+sudo nano config.yaml
+```
+
+Opens the config file in the nano text editor. Here you can configure the different variables.
+
+```bash
+docker build -t mcvankemenade/nanofaucet .
+```
+
+Builds a docker image from the project. If you want to change your settings in the config you can recreate the image or run the container with a volume.
+
+```bash
+docker run -d -p 80:80 --restart=unless-stopped mcvankemenade/nanofaucet
+```
+
+runs the docker container. WARNING: this exposes the faucet webpage to your network on port 80. use a reverse proxy if you want to expose it to the internet.
 
 ### Using HTTPS
 
@@ -54,4 +65,4 @@ If you're running the faucet on a seperate machine on the same local network you
 
 ## Disclaimer!
 
-I am not a professional developer in any way. So do your own research! (Thats always a great idea anyway.)
+I am not a professional developer in any way. So do your own research! (which is a great idea anyway.)
