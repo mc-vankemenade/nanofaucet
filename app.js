@@ -34,19 +34,18 @@ ws.post('/withdraw', (req, res) => {
             var message = {
                 "action": "send",
                 "wallet": config.walletId,
-                "source": config.walletAddr,
+                "source": config.accountAddr,
                 "destination": req.body.address,
                 "amount": config.depositAmountRaw,
                 "id": uuidv4()
             };
 
             queryWallet(message, (walletResponse) => {
-                console.log(walletResponse);
+                cachedAddresses.push(targetAddress);
+                console.log("cached address: " + cachedAddresses);
+                res.status(200).send();
             });
         
-            cachedAddresses.push(targetAddress);
-            console.log("cached address: " + cachedAddresses);
-            res.status(200).send();
         }
         else if(status == 200 && cachedAddresses.includes(targetAddress)) {
             res.status(403).send("Forbidden");
@@ -110,7 +109,7 @@ function queryWallet(message, callback) {
 
     http.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-            console.log(this.responseText);
+            console.log("wallet response: " + this.responseText);
             let json = JSON.parse(this.responseText);
             callback(json);
         }
